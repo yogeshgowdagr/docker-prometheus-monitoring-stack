@@ -10,7 +10,7 @@ cd ~ || exit
 
 touch prometheus
 
-cat > prometheus <<EOF
+cat > prometheus.service <<EOF
 [Unit]
 Description=Monitoring system and time series database
 Wants=network-online.target
@@ -105,7 +105,7 @@ if [ $nexp -ne 0 ]; then
     mkdir /etc/prometheus/data
     chown -R prometheus:prometheus /etc/prometheus
     chmod -R 755 /etc/prometheus
-    cat prometheus > /etc/systemd/system/prometheus.service
+    cat prometheus.service > /etc/systemd/system/prometheus.service
     sudo systemctl daemon-reload
     sudo systemctl restart prometheus.service
     sudo systemctl enable prometheus.service
