@@ -118,7 +118,8 @@ else
     sleep 5 
 fi
 
-
+cd ~ || exit
+rm -rf prometheus*
 
 iptables -A INPUT -p tcp --dport $port -j ACCEPT
 iptables -I INPUT -p tcp --dport $port -j ACCEPT
