@@ -30,4 +30,6 @@ The Added Script is a One time instalation script , you can also use same to run
 chmod +x prometheus.sh
 ```
 Note You need to add your server IP's in scrape configs 
-
+```
+./prometheus.sh
+```
