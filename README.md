@@ -1,5 +1,7 @@
 # monitoring
 
+Note : Try to run this as a root user .
+
 ```
 git clone https://github.com/yogeshgowdagr/monitoring.git
 
