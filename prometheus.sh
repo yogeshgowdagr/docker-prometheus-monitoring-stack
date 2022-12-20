@@ -8,8 +8,6 @@ ver=2.36.1  ## change version according to you
 
 cd ~ || exit
 
-touch prometheus
-
 cat > prometheus.service <<EOF
 [Unit]
 Description=Monitoring system and time series database
@@ -106,6 +104,8 @@ if [ $nexp -ne 0 ]; then
     chown -R prometheus:prometheus /etc/prometheus
     chmod -R 755 /etc/prometheus
     cat prometheus.service > /etc/systemd/system/prometheus.service
+    cd ~ || exit
+    rm -rf prometheus*
     sudo systemctl daemon-reload
     sudo systemctl restart prometheus.service
     sudo systemctl enable prometheus.service
