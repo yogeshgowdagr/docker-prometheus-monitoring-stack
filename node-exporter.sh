@@ -57,7 +57,7 @@ else
     sleep 5 
 fi
 
-iptables -A INPUT -p tcp -s $promserver--dport $port -j ACCEPT
-iptables -I INPUT -p tcp -s $promserver--dport $port -j ACCEPT
+iptables -A INPUT -p tcp -s $promserver --dport $port -j ACCEPT
+iptables -I INPUT -p tcp -s $promserver --dport $port -j ACCEPT
 
 
