@@ -12,7 +12,7 @@ route:
   repeat_interval: 10h
   routes:
   - match:
-      severity: group1  ### matching mirafra label to send alerts 
+      severity: group1  ### matching group1 label to send alerts 
     receiver: "group1"
 
 
@@ -31,6 +31,6 @@ receivers:
 ### wehook or slack configs to send alerts 
 
   slack_configs:
-  - api_url: https://chat.bangalore2.com/hooks/5ub7wxdz5jy1jyzzqqx443p6pc
+  - api_url: https://chat.example.com/hooks/5ub7wxdz5ihadajy1qqx443p6pc
     channel: '#alerts'
     send_resolved: true
