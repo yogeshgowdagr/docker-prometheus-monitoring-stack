@@ -4,8 +4,7 @@ Note : Run the scripts as a root user if you are installing as a service .
 
 Clone the REPO
 ```
-git clone https://github.com/yogeshgowdagr/monitoring.git
-
+https://github.com/yogeshgowdagr/docker-prometheus-monitoring-stack.git
 ```
 get inside the folder 
 ```
@@ -61,4 +60,5 @@ Note You need to add your server IP's in scrape configs
 ./prometheus.sh
 ```
 
+Check out more on https://blogs.q21.in and also check out my docker images at https://hub.docker.com/r/yogeshgowdagr/
 
