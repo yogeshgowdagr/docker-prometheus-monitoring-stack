@@ -1,0 +1,36 @@
+global:
+  resolve_timeout: 5m
+  #### setting global Email settings 
+
+  smtp_smarthost: 'smtp.example.com:587'
+  smtp_from: 'alerts@example.com'
+  smtp_auth_username: 'alerts@example.com'
+  smtp_auth_password: 'Fjiggzy8LH'
+
+route:
+  receiver: "itsupport"   ## default group for all alerts 
+  repeat_interval: 10h
+  routes:
+  - match:
+      severity: group1  ### matching mirafra label to send alerts 
+    receiver: "group1"
+
+
+#####    matching and sending emails 
+receivers:
+- name: 'itsupport'
+  email_configs: 
+  - to: 'itsupport@example.com'    ###default group for all alerts 
+    send_resolved: true
+
+- name: 'group1'
+  email_configs:
+  - to: 'group1@example.com'
+    send_resolved: true
+
+### wehook or slack configs to send alerts 
+
+  slack_configs:
+  - api_url: https://chat.bangalore2.com/hooks/5ub7wxdz5jy1jyzzqqx443p6pc
+    channel: '#alerts'
+    send_resolved: true

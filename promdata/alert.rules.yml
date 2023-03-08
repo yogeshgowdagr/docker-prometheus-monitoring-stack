@@ -1,0 +1,92 @@
+groups:
+ - name: 'prometheus'
+
+ #### alert rules for itsupport and group1 (All Alerts )
+   rules:
+   - alert: InstanceDown
+     expr: up == 0
+     for: 1m
+   - alert: LoadAverage10m High
+     expr: node_load10 >= 5.0
+     for: 3m
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high load average"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high load average ({{ $value }}) over 5 minutes."
+   - alert: MemoryUsage
+     expr: 100 - ((node_memory_MemAvailable_bytes * 100) / node_memory_MemTotal_bytes) >= 95
+     for: 5m
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high memory usage"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high memory usage ({{ $value }}) over 5 minutes."
+   - alert: DiskUsage
+     expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs"}) >= 90
+     for: 5m
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high disk usage"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high disk usage ({{ $value }}) over 5 minutes."
+   - alert: Host-Unusual-Network-Throughput-In
+     expr: sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100
+     for: 5m
+     labels:
+       severity: warning
+     annotations:
+       summary: Host unusual network throughput in (instance {{ $labels.instance }})
+       description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+   - alert: Host-Unusual-Network-ThroughputOut
+     expr: sum by (instance) (rate(node_network_transmit_bytes_total[2m])) / 1024 / 1024 > 100
+     for: 5m
+     labels:
+       severity: warning
+     annotations:
+       summary: Host unusual network throughput out (instance {{ $labels.instance }})
+       description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+      #####   Alert rules for group1 (label group1 )
+ - name: group1
+   rules:
+   - alert: InstanceDown
+     expr: up{job="Internalnodes"}== 0
+     for: 1m
+     labels:
+       severity: group1
+   - alert: LoadAverage10m High
+     expr: node_load10{job="Internalnodes"} >= 5.0
+     for: 3m
+     labels:
+       severity: group1
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high load average"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high load average ({{ $value }}) over 5 minutes."
+   - alert: MemoryUsage
+     expr: 100 - ((node_memory_MemAvailable_bytes{job="Internalnodes"} * 100) / node_memory_MemTotal_bytes{job="Internalnodes"}) >= 95
+     for: 5m
+     labels:
+       severity: group1
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high memory usage"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high memory usage ({{ $value }}) over 5 minutes."
+   - alert: DiskUsage
+     expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/",fstype!="rootfs",job="Internalnodes"} * 100) / node_filesystem_size_bytes{mountpoint="/",fstype!="rootfs",job="Internalnodes"}) >= 90
+     for: 5m
+     labels:
+       severity: group1
+     annotations:
+       summary: "Instance {{ $labels.instance }} - high disk usage"
+       description: "{{ $labels.instance  }} (measured by {{ $labels.job }}) has high disk usage ({{ $value }}) over 5 minutes."
+   - alert: Host-Unusual-Network-Throughput-In
+     expr: sum by (instance) (rate(node_network_receive_bytes_total{job="Internalnodes"}[2m])) / 1024 / 1024 > 100
+     for: 5m
+     labels:
+       severity: group1
+     annotations:
+       summary: Host unusual network throughput in (instance {{ $labels.instance }})
+       description: "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+   - alert: Host-Unusual-Network-ThroughputOut
+     expr: sum by (instance) (rate(node_network_transmit_bytes_total{job="Internalnodes"}[2m])) / 1024 / 1024 > 100
+     for: 5m
+     labels:
+       severity: group1
+     annotations:
+       summary: Host unusual network throughput out (instance {{ $labels.instance }})
+       description: "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+

@@ -1,0 +1,44 @@
+version: '3'
+services:
+  grafana:
+    image: yogeshgowdagr/grafana
+    ports:
+      - 3000:3000
+    user: '104'
+
+  prometheus:
+    ports:
+      - '9090:9090'
+    volumes:
+      - './promdata:/etc/prometheus'
+      - 'prometheus:/prometheus'
+    image: prom/prometheus
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+
+  alertmanager:
+    image: prom/alertmanager
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+    ports:
+      - '9093:9093'
+      
+  blackbox:
+    image: prom/blackbox-exporter
+    ports:
+      - 9115:9115
+    volumes:
+      - ./config.yml:/etc/blackbox_exporter/config.yml  
+
+volumes:
+  prometheus:
+    external: true 
