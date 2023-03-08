@@ -11,7 +11,7 @@ get inside the folder
 ```
 cd monitoring
 ```
-In Simple way,  Use `docker-compose up -d` to bring up the stack with grafana-prometheus-alertmanager-balckboxexporter-cadvsor
+In Simple way,  Use `docker-compose up -d` to bring up the stack with grafana-prometheus-alertmanager-balckboxexporter-cadvisor
 
 *Note*  Grafana Logins
 user : admin
@@ -20,8 +20,11 @@ Pass : Admin$1199
 go to `localhost:3000` to check grafana 
 
 `alertmanager.yml`>`alertmanagerconfig`
+
 `config.yml`>`blackbox config`
+
 `promdata/alert.rules.yml`>`alerting rules`
+
 `prometheus.yml`>`Prometheus configuration`
 
 
